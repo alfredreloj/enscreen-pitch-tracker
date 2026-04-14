@@ -1,0 +1,61 @@
+{
+  "name": "eNscreen Pitch Tracker",
+  "short_name": "eNscreen Pitch",
+  "description": "Mobile-first PWA for managing sales prospects and pitches",
+  "start_url": "/enscreen-pitch-tracker/",
+  "display": "standalone",
+  "background_color": "#e8f4fb",
+  "theme_color": "#1a3a5c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a3a5c' width='192' height='192'/><text x='50%' y='50%' font-size='100' font-weight='bold' fill='%235bb3d8' text-anchor='middle' dominant-baseline='middle' font-family='Arial'>eN</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%231a3a5c' width='512' height='512'/><text x='50%' y='50%' font-size='280' font-weight='bold' fill='%235bb3d8' text-anchor='middle' dominant-baseline='middle' font-family='Arial'>eN</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%231a3a5c' width='540' height='720'/><text x='50%' y='50%' font-size='120' font-weight='bold' fill='%235bb3d8' text-anchor='middle' dominant-baseline='middle'>eNscreen</text><text x='50%' y='150' font-size='60' fill='%235bb3d8' text-anchor='middle'>Pitch Tracker</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Prospect",
+      "short_name": "Add",
+      "description": "Quickly add a new prospect",
+      "url": "/enscreen-pitch-tracker/?action=add",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232a7ab8' width='192' height='192'/><text x='50%' y='50%' font-size='120' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>+</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "View Prospects",
+      "short_name": "View",
+      "description": "View all prospects",
+      "url": "/enscreen-pitch-tracker/?action=view",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%235bb3d8' width='192' height='192'/><text x='50%' y='50%' font-size='120' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>📊</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
