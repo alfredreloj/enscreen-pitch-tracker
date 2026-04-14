@@ -301,6 +301,27 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            min-height: 100px;
+        }
+
+        .kanban-cards.drag-over {
+            background-color: rgba(90, 179, 216, 0.1);
+            border-radius: 0.5rem;
+            border: 2px dashed var(--light-blue);
+            padding: 0.5rem;
+        }
+
+        .prospect-card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .prospect-card {
+            cursor: grab;
+        }
+
+        .prospect-card:active {
+            cursor: grabbing;
         }
 
         /* Card List View */
@@ -949,6 +970,10 @@
 
                 const cardsContainer = document.createElement('div');
                 cardsContainer.className = 'kanban-cards';
+                cardsContainer.dataset.stage = stage;
+                cardsContainer.addEventListener('dragover', handleDragOver);
+                cardsContainer.addEventListener('dragleave', handleDragLeave);
+                cardsContainer.addEventListener('drop', handleDrop);
 
                 if (stageProspects.length === 0) {
                     const empty = document.createElement('div');
@@ -1017,6 +1042,8 @@
         function createProspectCard(prospect) {
             const card = document.createElement('div');
             card.className = `prospect-card ${prospect.stage}`;
+            card.draggable = true;
+            card.dataset.prospectId = prospect.id;
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -1077,6 +1104,10 @@
                     <button class="action-delete" onclick="deleteProspect('${prospect.id}')">🗑️ Delete</button>
                 </div>
             `;
+
+            // Add drag event listeners
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragend', handleDragEnd);
 
             return card;
         }
@@ -1184,6 +1215,52 @@ eNscreen Sales Team`;
 
             document.getElementById('aiMessageContent').textContent = message;
             document.getElementById('aiMessageModal').classList.add('active');
+        }
+
+        // Drag and Drop Handlers
+        let draggedProspectId = null;
+
+        function handleDragStart(e) {
+            draggedProspectId = e.target.dataset.prospectId;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.kanban-cards').forEach(container => {
+                container.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            if (e.currentTarget === e.target) {
+                e.currentTarget.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+
+            if (!draggedProspectId) return;
+
+            const newStage = e.currentTarget.dataset.stage;
+            const prospect = app.prospects.find(p => p.id === draggedProspectId);
+
+            if (prospect && prospect.stage !== newStage) {
+                prospect.stage = newStage;
+                saveProspects();
+            }
+
+            draggedProspectId = null;
         }
 
         // Export to CSV
