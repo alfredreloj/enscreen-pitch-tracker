@@ -904,13 +904,31 @@
 
         // Load prospects from localStorage
         function loadProspects() {
-            const stored = localStorage.getItem('enscreen_prospects');
-            app.prospects = stored ? JSON.parse(stored) : [];
+            try {
+                const stored = localStorage.getItem('enscreen_prospects');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    app.prospects = Array.isArray(parsed) ? parsed : [];
+                } else {
+                    app.prospects = [];
+                }
+            } catch (err) {
+                console.error('Failed to load prospects from localStorage:', err);
+                app.prospects = [];
+            }
         }
 
         // Save prospects to localStorage
         function saveProspects() {
-            localStorage.setItem('enscreen_prospects', JSON.stringify(app.prospects));
+            try {
+                localStorage.setItem('enscreen_prospects', JSON.stringify(app.prospects));
+            } catch (err) {
+                console.error('Failed to save prospects to localStorage:', err);
+                // Storage might be full — alert the user
+                if (err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    alert('Storage is full. Please export your data to CSV and clear some browser storage.');
+                }
+            }
             updateStats();
             render();
         }
